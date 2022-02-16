@@ -4,6 +4,7 @@
    <id>monika</id>
     <version>1.6.12</version>
     <title>monika (Install)</title>
+    <authors>raosan</authors>
     <projectUrl>https://monika.hyperjump.tech/</projectUrl>
     <iconUrl>https://cdn.statically.io/gh/hyperjumptech/monika/main/docs/public/monika.svg</iconUrl>
     <tags>monika monitoring</tags>
