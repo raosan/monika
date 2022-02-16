@@ -4,9 +4,8 @@
    <id>monika</id>
     <version>1.6.12</version>
     <title>monika (Install)</title>
-    <authors>Hyperjump</authors>
     <projectUrl>https://monika.hyperjump.tech/</projectUrl>
-    <iconUrl>https://monika.hyperjump.tech/playground_assets/logo-monika-color%20%5B1%5D-1500h.png</iconUrl>
+    <iconUrl>https://cdn.statically.io/gh/hyperjumptech/monika/main/docs/public/monika.svg</iconUrl>
     <tags>monika monitoring</tags>
     <description>Monika - Free and Open Source Synthetic Monitoring Tool</description>
   </metadata>
