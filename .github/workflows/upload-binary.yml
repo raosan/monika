@@ -8,9 +8,8 @@ on:
   release:
     types: [created]
 
-jobs:
+job:
   upload:
-    needs: test
     name: Publish for ${{ matrix.os }}
     runs-on: ${{ matrix.runs_on }}
     strategy:
