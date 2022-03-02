@@ -37,7 +37,7 @@ jobs:
           # - os: Linux
           #   runs_on: ubuntu-latest
           #   platform: linux-x64
-            file_name: monika
+            # file_name: monika
           - os: Windows
             runs_on: windows-latest
             platform: win-x64
