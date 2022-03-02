@@ -8,7 +8,7 @@ on:
   release:
     types: [created]
 
-job:
+jobs:
   upload:
     name: Publish for ${{ matrix.os }}
     runs-on: ${{ matrix.runs_on }}
