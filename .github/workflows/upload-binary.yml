@@ -30,27 +30,10 @@ jobs:
         name: Get version
         id: get_version
         shell: bash
-      
-      - run: npm ci
-        name: Install dependencies
-      
-      - run: npm run pkg -- -t node12-${{ matrix.platform }}
+
+      - run: mkdir dist && echo test file > ./dist/test-file.txt
         name: Pack the binary using vercel/pkg
-     
-      - run: |
-          echo "::set-output name=NODE_SQLITE_PATH::$(find ./node_modules -name node_sqlite3.node)"
-        name: Find SQLite binary
-        id: find-node-sqlite
-        shell: bash
-      
-      - run: echo ${{ steps.find-node-sqlite.outputs.NODE_SQLITE_PATH }}
-        name: Check if the SQLite binary is exists
-        shell: bash
-      
-      - run: cp ${{ steps.find-node-sqlite.outputs.NODE_SQLITE_PATH }} ./dist
-        name: Copy the node sqlite binary
-        shell: bash
-      
+
       - run: file ./dist/*
         name: List all the files to be compressed
         shell: bash
@@ -81,7 +64,23 @@ jobs:
           asset_name: monika-${{ steps.get_version.outputs.VERSION }}-${{ matrix.platform }}-CHECKSUM.txt
           tag: ${{ github.ref }}
       
-      - name: Upload package to chocolatey
-        run: echo ${{ steps.upload_binary_to_release.outputs.browser_download_url }}
+      - name: Create chocolateyinstall.ps1 file
+        run: echo Install-ChocolateyZipPackage monika './chocolatey/tools' [${{ steps.upload_binary_to_release.outputs.browser_download_url }} --checksum64 shasum -a 256 monika-${{ steps.get_version.outputs.VERSION }}-${{ matrix.platform }}.zip -checksumType64 'sha256'] > ./chocolatey/tools/chocolateyinstall.ps1
+
+      - name: Edit version in monika.nuspec
+        uses: rvolo/xml-replace-action@v0.2
+        with:
+          filepath: "./chocolatey/monika.nuspec"
+          xpath: "//package/metadata/version/text()"
+          replace: ${{ steps.get_version.outputs.VERSION }}
+
+      - name: Choco pack
+        run: choco pack
+
+      - name: Choco upload
+        run: |
+          choco apikey --key ${{ secrets.GITHUB_TOKEN }} --source https://push.chocolatey.org/
+          choco push monika.${{ steps.get_version.outputs.VERSION }}.nupkg --source https://push.chocolatey.org/
+
 
 
