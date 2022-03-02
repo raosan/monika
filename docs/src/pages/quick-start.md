@@ -7,7 +7,7 @@ At the center of Monika is a configuration file. Follow the steps below to quick
 
 ## Installation
 
-There are four ways to install Monika
+There are many ways to install Monika
 
 1. Install using [npm](https://npmjs.com) or [yarn](https://yarnpkg.com) (**Windows/Linux/Mac**).
 
@@ -44,6 +44,10 @@ There are four ways to install Monika
    ```
    choco install monika
    ```
+
+5. Install via Snapcraft
+
+   [![Get it from the Snap Store](https://snapcraft.io/static/images/badges/en/snap-store-black.svg)](https://snapcraft.io/monika)
 
 ## Download the configuration file
 
