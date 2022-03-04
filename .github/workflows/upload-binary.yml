@@ -64,15 +64,6 @@ jobs:
           asset_name: monika-${{ steps.get_version.outputs.VERSION }}-${{ matrix.platform }}-CHECKSUM.txt
           tag: ${{ github.ref }}
       
-  deploy-chocolatey:
-    needs: upload
-    name: Deploy Chocolatey
-    runs-on: windows-latest
-    defaults:
-      run:
-        working-directory: ./chocolatey
-
-    steps:
       - name: Read checksum file
         id: checksum_file
         uses: juliangruber/read-file-action@v1
