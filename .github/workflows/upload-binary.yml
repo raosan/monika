@@ -84,7 +84,16 @@ jobs:
               const fs = require('fs');
               const oldString = fs.readFileSync('./chocolatey/example/monika-example.nuspec','utf8').toString();
               const newString = oldString.replace("_VERSION_", "${{ steps.get_version.outputs.VERSION }}");
-              fs.writeFile("./chocolatey/monika.nuspec", newString);
+              fs.writeFile("./chocolatey/monika.nuspec", newString, {
+                encoding: "utf8"
+              },
+              (err) => {
+                if (err)
+                  console.log(err);
+                else {
+                  console.log("File written successfully\n");
+                }
+              });
               return newString;
             result-encoding: string
 
