@@ -77,7 +77,7 @@ jobs:
         uses: rvolo/xml-replace-action@v0.2
         with:
           filepath: "./chocolatey/monika.nuspec"
-          xpath: "//package/metadata/version/text()"
+          xpath: "//metadata/version/text()"
           replace: ${{ steps.get_version.outputs.VERSION }}
 
       - run: file ./chocolatey/*
@@ -87,9 +87,11 @@ jobs:
         run: cat ./chocolatey/monika.nuspec
 
       - name: Choco pack
+        working-directory: ./chocolatey
         run: choco pack
 
       - name: Choco upload
+        working-directory: ./chocolatey
         run: |
           choco apikey --key ${{ 'secrets.GITHUB_TOKEN' }} --source https://push.chocolatey.org/
           choco push monika.${{ steps.get_version.outputs.VERSION }}.nupkg --source https://push.chocolatey.org/
