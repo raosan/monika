@@ -65,6 +65,7 @@ jobs:
           tag: ${{ github.ref }}
       
   deploy-chocolatey:
+    needs: upload
     name: Deploy Chocolatey
     runs-on: windows-latest
     defaults:
