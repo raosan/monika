@@ -80,6 +80,12 @@ jobs:
           xpath: "//package/metadata/version/text()"
           replace: ${{ steps.get_version.outputs.VERSION }}
 
+      - run: file ./chocolatey/*
+        name: List all the files in chocolatey folder
+      
+      - name: see nuspec file content
+        run: cat ./chocolatey/monika.nuspec
+
       - name: Choco pack
         run: choco pack
 
