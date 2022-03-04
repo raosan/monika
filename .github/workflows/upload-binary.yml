@@ -100,8 +100,11 @@ jobs:
           MY_STRING="${MY_STRING//'%'/'%25'}"
           MY_STRING="${MY_STRING//$'\n'/'%0A'}"
           MY_STRING="${MY_STRING//$'\r'/'%0D'}"
-          echo $MY_STRING > monika.nuspec
+          echo $MY_STRING > ./chocolatey/monika.nuspec
 
+      - name: List all the files in chocolatey folder
+        run: file ./chocolatey/*
+        
       - name: see nuspec file content
         run: cat ./chocolatey/monika.nuspec
 
