@@ -1,5 +1,5 @@
-﻿<?xml version=\"1.0\" encoding=\"utf-8\"?>
-<package xmlns=\"http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd\">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>monika</id>
     <version>_VERSION_</version>
@@ -11,6 +11,6 @@
     <description>Monika - Free and Open Source Synthetic Monitoring Tool</description>
   </metadata>
   <files>
-    <file src=\"tools\\**\" target=\"tools\" />
+    <file src="tools\**" target="tools" />
   </files>
 </package>

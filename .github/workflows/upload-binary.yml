@@ -83,12 +83,13 @@ jobs:
             script: |
               const fs = require('fs');
               const oldString = fs.readFileSync('./chocolatey/example/monika-example.nuspec','utf8').toString();
+              console.log(oldString, 'lala')
               const newString = oldString.replace("_VERSION_", "${{ steps.get_version.outputs.VERSION }}");
               return newString;
             result-encoding: string
 
       - name: Write new nuspec file
-        run: echo "${{steps.change_version.outputs.result}}" > ./chocolatey/monika.nuspec
+        run: echo ${{steps.change_version.outputs.result}} > ./chocolatey/monika.nuspec
 
       - name: List all the files in chocolatey folder
         run: file ./chocolatey/*
