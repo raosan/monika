@@ -109,9 +109,6 @@ jobs:
               });
               return newString;
             result-encoding: string
-
-      - name: List all the files in chocolatey folder
-        run: file ./chocolatey/*
         
       - name: see nuspec file content
         run: cat ./chocolatey/monika.nuspec
@@ -119,6 +116,12 @@ jobs:
       - name: Choco pack
         working-directory: ./chocolatey
         run: choco pack
+
+      - name: remove example folder
+        run: rm -r example
+
+      - name: List all the files in chocolatey folder
+        run: file ./chocolatey/*
 
       - name: Choco upload
         working-directory: ./chocolatey
