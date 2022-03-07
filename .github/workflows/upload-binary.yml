@@ -76,7 +76,7 @@ jobs:
       - name: See chocolateyinstall.ps1 file content
         run: cat ./chocolatey/tools/chocolateyinstall.ps1
 
-      - run: echo "::set-output name=version::${{ steps.get_version.outputs.VERSION }} | sed 's/^.//'"  
+      - run: echo ::set-output name=version::${{ steps.get_version.outputs.VERSION }} | sed 's/^.//'
         name: Get version number without preftix
         id: get_version_number
         shell: bash
