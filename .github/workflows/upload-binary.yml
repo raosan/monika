@@ -76,7 +76,7 @@ jobs:
       - name: See chocolateyinstall.ps1 file content
         run: cat ./chocolatey/tools/chocolateyinstall.ps1
 
-      - run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//} | sed 's/^.//'  
+      - run: echo ${{ steps.get_version.outputs.VERSION }} | sed 's/^.//'  
         name: Get version number without preftix
         id: get_version_number
         shell: bash
@@ -87,7 +87,7 @@ jobs:
             script: |
               const fs = require('fs');
               const oldString = fs.readFileSync('./chocolatey/example/monika-example.nuspec','utf8').toString();
-              const versionString = "${{ steps.get_version_number.outputs.VERSION }}"
+              const versionString = "${{ steps.get_version_number.outputs.content }}"
               const newString = oldString.replace("_VERSION_", versionString);
               fs.writeFile("./chocolatey/monika.nuspec", newString, {
                 encoding: "utf8"
@@ -116,4 +116,4 @@ jobs:
         working-directory: ./chocolatey
         run: |
           choco apikey --key ${{ secrets.GITHUB_TOKEN }} --source https://push.chocolatey.org/
-          choco push monika.${{ steps.get_version_number.outputs.VERSION }}.nupkg --source https://push.chocolatey.org/
+          choco push monika.${{ steps.get_version_number.outputs.content }}.nupkg --source https://push.chocolatey.org/
