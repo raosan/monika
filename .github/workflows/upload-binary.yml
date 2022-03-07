@@ -79,8 +79,8 @@ jobs:
       - run: echo ${{ steps.get_version.outputs.VERSION }} | sed 's/^.//' > version_number.txt
         name: Write version number without preftix
 
-      - name: See version_text.txt content
-        run: cat version_text.txt
+      - name: See version_number.txt content
+        run: cat version_number.txt
 
       - name: Read version number without preftix
         id: read_version
