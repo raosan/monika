@@ -71,23 +71,27 @@ jobs:
           path: monika-${{ steps.get_version.outputs.VERSION }}-win-x64-CHECKSUM.txt
       
       - name: Create chocolateyinstall.ps1 file
-        run: mkdir -p chocolatey/tools && echo "Install-ChocolateyZipPackage monika ${{'"$(Split-Path -parent $MyInvocation.MyCommand.Definition)"'}} [${{ steps.upload_binary_to_release.outputs.browser_download_url }} ${{'-checksum64'}} 8739c76e681f900923b900c9df0ef75cf421d39cabb54650c4b9ad19b6a76d85 ${{'-checksumType64'}} 'sha256']" > ./chocolatey/tools/chocolateyinstall.ps1
+        run: mkdir -p chocolatey/tools && echo "Install-ChocolateyZipPackage monika ${{ '"$(Split-Path -parent $MyInvocation.MyCommand.Definition)"' }} [${{ steps.upload_binary_to_release.outputs.browser_download_url }} ${{'-checksum64'}} 8739c76e681f900923b900c9df0ef75cf421d39cabb54650c4b9ad19b6a76d85 ${{'-checksumType64'}} 'sha256']" > ./chocolatey/tools/chocolateyinstall.ps1
 
       - name: See chocolateyinstall.ps1 file content
         run: cat ./chocolatey/tools/chocolateyinstall.ps1
 
-      - run: echo ::set-output name=version::${{ steps.get_version.outputs.VERSION }} | sed 's/^.//'
-        name: Get version number without preftix
-        id: get_version_number
-        shell: bash
+      - run: echo ${{ steps.get_version.outputs.VERSION }} | sed 's/^.//' > version_number.txt
+        name: Write version number without preftix
 
+      - name: Read version number without preftix
+        id: read_version
+        uses: juliangruber/read-file-action@v1
+        with:
+          path: version_number.txt
+      
       - name: Change version in nuspec file
         uses: actions/github-script@v6
         with:
             script: |
               const fs = require('fs');
               const oldString = fs.readFileSync('./chocolatey/example/monika-example.nuspec','utf8').toString();
-              const versionString = "${{ steps.get_version_number.outputs.version }}"
+              const versionString = "${{ steps.read_version.outputs.content }}"
               const newString = oldString.replace("_VERSION_", versionString);
               fs.writeFile("./chocolatey/monika.nuspec", newString, {
                 encoding: "utf8"
@@ -116,4 +120,4 @@ jobs:
         working-directory: ./chocolatey
         run: |
           choco apikey --key ${{ secrets.GITHUB_TOKEN }} --source https://push.chocolatey.org/
-          choco push monika.${{ steps.get_version_number.outputs.version }}.nupkg --source https://push.chocolatey.org/
+          choco push monika.${{ steps.read_version.outputs.content }}.nupkg --source https://push.chocolatey.org/
