@@ -118,6 +118,7 @@ jobs:
         run: choco pack
 
       - name: remove example folder
+        working-directory: ./chocolatey
         run: rm -r example
 
       - name: List all the files in chocolatey folder
