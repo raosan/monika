@@ -83,7 +83,8 @@ jobs:
             script: |
               const fs = require('fs');
               const oldString = fs.readFileSync('./chocolatey/example/monika-example.nuspec','utf8').toString();
-              const newString = oldString.replace("_VERSION_", "${{ steps.get_version.outputs.VERSION }}");
+              const versionString = "${{ steps.get_version.outputs.VERSION }}".replace("v", "")
+              const newString = oldString.replace("_VERSION_", versionString);
               fs.writeFile("./chocolatey/monika.nuspec", newString, {
                 encoding: "utf8"
               },
@@ -110,5 +111,5 @@ jobs:
       - name: Choco upload
         working-directory: ./chocolatey
         run: |
-          choco apikey --key ${{ 'secrets.GITHUB_TOKEN' }} --source https://push.chocolatey.org/
+          choco apikey --key ${{ secrets.GITHUB_TOKEN }} --source https://push.chocolatey.org/
           choco push monika.${{ steps.get_version.outputs.VERSION }}.nupkg --source https://push.chocolatey.org/
