@@ -12,8 +12,19 @@ jobs:
     steps:
       - name: Extract version
         id: extract-version
-        run: |
-          printf "::set-output name=%s::%s\n" tag-name "${GITHUB_REF#refs/tags/}" | sed 's/^.//'
+        # run: |
+        #   printf "::set-output name=%s::%s\n" tag-name "${GITHUB_REF#refs/tags/}"
+      # - run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+        uses: actions/github-script@v6
+        with:
+            script: |
+              const versionWithPrefix = "${GITHUB_REF/refs\/tags\//}"
+              const versionWithoutPrefix = versionWithPrefix.replace("v", "")
+              
+              return versionWithoutPrefix;
+            result-encoding: string
+
       - run: echo https://registry.npmjs.org/@hyperjumptech/monika/-/monika-${{ steps.extract-version.outputs.tag-name }}.tgz
 
       # - uses: mislav/bump-homebrew-formula-action@v2
