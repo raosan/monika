@@ -10,26 +10,30 @@ jobs:
     name: Bump Homebrew formula
     runs-on: ubuntu-latest
     steps:
-      - name: Extract version
-        id: extract-version
-        # run: |
-        #   printf "::set-output name=%s::%s\n" tag-name "${GITHUB_REF#refs/tags/}"
-      # - run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      - run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        name: Get version
+        id: get_version
+        shell: bash
 
-        uses: actions/github-script@v6
+      - run: echo ${{ steps.get_version.outputs.VERSION }} | sed 's/^.//' > version_number.txt
+        name: Write version number without prefix
+
+      - name: See version_number.txt content
+        run: cat version_number.txt
+
+      - name: Read version number without prefix
+        id: read_version
+        uses: juliangruber/read-file-action@v1
         with:
-            script: |
-              const versionWithPrefix = "${GITHUB_REF/refs\/tags\//}"
-              const versionWithoutPrefix = versionWithPrefix.replace("v", "")
-              
-              return versionWithoutPrefix;
-            result-encoding: string
+          path: version_number.txt
+          trim: true
 
-      - run: echo https://registry.npmjs.org/@hyperjumptech/monika/-/monika-${{ steps.extract-version.outputs.tag-name }}.tgz
+      - name: See url
+        run: echo https://registry.npmjs.org/@hyperjumptech/monika/-/monika-${{ steps.read_version.outputs.content }}.tgz
 
       # - uses: mislav/bump-homebrew-formula-action@v2
       #   with:
       #     formula-name: monika
-      #     download-url: https://registry.npmjs.org/@hyperjumptech/monika/-/monika-${{ steps.extract-version.outputs.tag-name }}.tgz
+      #     download-url: https://registry.npmjs.org/@hyperjumptech/monika/-/monika-${{ steps.read_version.outputs.content }}.tgz
       #   env:
       #     COMMITTER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
