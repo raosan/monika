@@ -13,12 +13,12 @@ jobs:
       - name: Extract version
         id: extract-version
         run: |
-          printf "::set-output name=%s::%s\n" tag-name "${GITHUB_REF#refs/tags/}"
+          printf "::set-output name=%s::%s\n" tag-name "${GITHUB_REF#refs/tags/}" | sed 's/^.//'
       - run: echo https://registry.npmjs.org/@hyperjumptech/monika/-/monika-${{ steps.extract-version.outputs.tag-name }}.tgz
 
       # - uses: mislav/bump-homebrew-formula-action@v2
       #   with:
       #     formula-name: monika
-      #     download-url: https://registry.npmjs.org/@hyperjumptech/monika/-/monika-${{ github.event.inputs.tag-name }}.tgz
+      #     download-url: https://registry.npmjs.org/@hyperjumptech/monika/-/monika-${{ steps.extract-version.outputs.tag-name }}.tgz
       #   env:
       #     COMMITTER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
