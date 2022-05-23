@@ -14,7 +14,7 @@ jobs:
         id: extract-version
         run: |
           printf "::set-output name=%s::%s\n" tag-name "${GITHUB_REF#refs/tags/}"
-      - run: echo https://registry.npmjs.org/@hyperjumptech/monika/-/monika-${{ github.event.inputs.tag-name }}.tgz
+      - run: echo https://registry.npmjs.org/@hyperjumptech/monika/-/monika-${{ steps.extract-version.outputs.tag-name }}.tgz
 
       # - uses: mislav/bump-homebrew-formula-action@v2
       #   with:
