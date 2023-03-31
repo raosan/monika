@@ -26,7 +26,7 @@ import { expect } from 'chai'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { NotificationMessage } from '../../../interfaces/notification'
-import { newPagerDuty } from './pagerduty'
+import { newPagerDuty } from '@hyperjumptech/monika-notification/channel/pagerduty'
 
 describe('PagerDuty notification', () => {
   describe('check the slug', () => {

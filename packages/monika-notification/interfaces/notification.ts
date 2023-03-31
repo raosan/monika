@@ -22,9 +22,7 @@
  * SOFTWARE.                                                                      *
  **********************************************************************************/
 
-import { PagerDutyNotification } from '../../packages/monika-notification/channel/pagerduty'
-import type { StatuspageNotification } from '../plugins/visualization/atlassian-status-page'
-import type { InstatusPageNotification } from '../plugins/visualization/instatus'
+import { PagerDutyNotification } from '../channel/pagerduty'
 import {
   MailgunData,
   MonikaNotifData,
@@ -166,9 +164,7 @@ export type Notification =
   | PushoverNotification
   | GotifyNotification
   | OpsgenieNotification
-  | StatuspageNotification
   | PushbulletNotification
-  | InstatusPageNotification
 
 interface BaseNotificationMessageMeta {
   type: string

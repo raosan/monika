@@ -22,10 +22,10 @@
  * SOFTWARE.                                                                      *
  **********************************************************************************/
 
-import { WebhookData } from '../../../interfaces/data'
-import { NotificationMessage } from '../../../interfaces/notification'
-import { sendHttpRequest } from '../../../utils/http'
-import { log } from '../../../utils/pino'
+import { WebhookData } from '../interfaces/data'
+import { NotificationMessage } from '../interfaces/notification'
+import { sendHttpRequest } from '../utils/http'
+import { log } from '../utils/pino'
 
 export const sendDiscord = async (
   data: WebhookData,

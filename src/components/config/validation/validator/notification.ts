@@ -31,7 +31,7 @@ import {
   slug as instatusPageSlug,
   validateConfig as instatusPageValidateConfig,
 } from '../../../../plugins/visualization/instatus'
-import { newPagerDuty } from '../../../notification/channel/pagerduty'
+import { newPagerDuty } from '../../../../../packages/monika-notification/channel/pagerduty'
 import { requiredFieldMessages } from '../notification-required-fields'
 
 const checkRecipients = (notification: Notification): string | undefined => {

@@ -29,7 +29,7 @@ import { validator as dataStatuspageSchemaValidator } from '../../plugins/visual
 import { validator as dataInstatusSchemaValidator } from '../../plugins/visualization/instatus'
 import getIp from '../../utils/ip'
 import { getMessageForStart } from './alert-message'
-import { newPagerDuty } from './channel/pagerduty'
+import { newPagerDuty } from '../../../packages/monika-notification/channel/pagerduty'
 import {
   dataDiscordSchemaValidator,
   dataDingtalkSchemaValidator,
