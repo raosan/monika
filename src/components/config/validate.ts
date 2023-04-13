@@ -29,7 +29,7 @@ import {
   validateProbes,
   validateSymonConfig,
 } from './validation'
-import { validateNotification } from '../../../packages/notification'
+import { validateNotification } from '@hyperjumptech/monika-notification/index'
 
 export const validateConfig = async (configuration: Config): Promise<void> => {
   const { flags } = getContext()
