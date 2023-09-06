@@ -17,7 +17,6 @@ RUN npm pack
 FROM node:18-alpine AS runner
 
 COPY --from=builder /monika/hyperjumptech-monika-*.tgz ./
-COPY --from=builder /monika/packages/notification/hyperjumptech-monika-notification-*.tgz ./packages/notification/
 RUN npm install -g --unsafe-perm ./hyperjumptech-monika-*.tgz
 
 WORKDIR /
